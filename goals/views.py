@@ -18,6 +18,12 @@ class GoalView(generics.ListCreateAPIView):
         serializer.save(user=user, goal_of_the_day_ml=goal_of_the_day_ml)
 
 
+class GoalRetrieveView(generics.RetrieveAPIView):
+    serializer_class = GoalSerializer
+    queryset = Goals.objects.all()
+    lookup_url_kwarg = "goal_id"
+
+
 class GoalDetailView(generics.UpdateAPIView):
     serializer_class = GoalSerializer
     queryset = Goals.objects.all()
