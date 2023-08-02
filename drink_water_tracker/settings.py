@@ -45,6 +45,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
+    "drf_spectacular",
 ]
 
 MY_APPS = [
@@ -125,6 +126,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Titulo exemplo",
+    "DESCRIPTION": "descriçao exemplo",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
