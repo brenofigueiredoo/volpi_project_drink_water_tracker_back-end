@@ -7,6 +7,8 @@
 
 ***➡ Quer acessar a documentação das rotas: http://localhost:8000/api/docs/swagger-ui/***
 
+***➡ Para acessar o Front End dessa aplicação: [Clique aqui](https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_front-end)***
+
 <br />
 
 * ***Apresentação do Projeto*** => [Clique aqui]() e confira a proposta do projeto.
@@ -58,4 +60,4 @@ para acessar a aplicação utilize: [localhost:8000](localhost:8000)
 
 Função   | Membro
 --------- | ------
-Developer | [Breno Figueiredo](https://www.linkedin.com/in/brenosfigueiredo/)
+Developer | [Breno S. Figueiredo](https://www.linkedin.com/in/brenosfigueiredo/)
