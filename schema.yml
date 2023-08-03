@@ -113,9 +113,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/GoalUpdate'
           description: ''
-  /api/goals/create/user/{user_id}:
+  /api/goals/user/{user_id}:
+    get:
+      operationId: api_goals_user_list
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+          description: ''
     post:
-      operationId: api_goals_create_user_create
+      operationId: api_goals_user_create
       parameters:
       - in: path
         name: user_id
@@ -147,31 +171,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Goal'
-          description: ''
-  /api/goals/user/{user_id}:
-    get:
-      operationId: api_goals_user_list
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Goal'
           description: ''
   /api/schema/:
     get:
