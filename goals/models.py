@@ -1,4 +1,3 @@
-from typing import Any
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import uuid
@@ -20,3 +19,5 @@ class Goals(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="goals"
     )
+
+    quantity = None

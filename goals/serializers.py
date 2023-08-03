@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Goals
+from django.core.validators import MinValueValidator
 
 
 class GoalSerializer(serializers.ModelSerializer):
@@ -19,3 +20,19 @@ class GoalSerializer(serializers.ModelSerializer):
             "remaining_goals_ml",
             "user",
         ]
+
+
+class GoalUpdateSerializer(serializers.ModelSerializer):
+    quantity = serializers.FloatField(validators=[MinValueValidator(0.0)])
+
+    class Meta:
+        model = Goals
+        fields = ["quantity"]
+
+    def validate(self, data):
+        quantity = data.get("quantity")
+        if quantity is None:
+            raise serializers.ValidationError(
+                {"quantity": ["O campo 'quantity' é obrigatório."]}
+            )
+        return data
