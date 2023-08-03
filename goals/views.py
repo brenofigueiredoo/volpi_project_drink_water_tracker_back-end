@@ -19,10 +19,12 @@ class GoalCreateView(generics.CreateAPIView):
         serializer.save(user=user, goal_of_the_day_ml=goal_of_the_day_ml)
 
 
-class GoalsUserListView(generics.RetrieveAPIView):
+class GoalsUserListView(generics.ListAPIView):
     serializer_class = GoalSerializer
-    queryset = Goals.objects.all()
-    lookup_url_kwarg = "user_id"
+
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]
+        return Goals.objects.filter(user_id=user_id)
 
 
 class GoalDetailView(generics.RetrieveDestroyAPIView):
