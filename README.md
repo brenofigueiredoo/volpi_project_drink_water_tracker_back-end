@@ -20,7 +20,6 @@
 &nbsp;
 
 ### Rodando localmente:
-- requisitos: Docker e docker-compose instalados na máquina
 1. Faça o clone da do repósitorio e acesse a pasta clonada.
 ```shell
 git clone https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_back-end.git
