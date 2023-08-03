@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
 
-class GoalView(generics.ListCreateAPIView):
+class GoalCreateView(generics.CreateAPIView):
     serializer_class = GoalSerializer
     queryset = Goals.objects.all()
 
@@ -17,6 +17,12 @@ class GoalView(generics.ListCreateAPIView):
         goal_of_the_day_ml = round(user.weight_kg * 35, 2)
 
         serializer.save(user=user, goal_of_the_day_ml=goal_of_the_day_ml)
+
+
+class GoalsUserListView(generics.RetrieveAPIView):
+    serializer_class = GoalSerializer
+    queryset = Goals.objects.all()
+    lookup_url_kwarg = "user_id"
 
 
 class GoalDetailView(generics.RetrieveDestroyAPIView):
