@@ -14,7 +14,7 @@ class Goals(models.Model):
         default=0,
         validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
     )
-    date = models.DateField(unique=True)
+    date = models.DateField()
 
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="goals"
