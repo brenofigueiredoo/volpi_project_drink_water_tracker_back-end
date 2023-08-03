@@ -60,4 +60,4 @@ para acessar a aplicação utilize: [localhost:8000](localhost:8000)
 
 Função   | Membro
 --------- | ------
-Developer | [Breno Figueiredo](https://www.linkedin.com/in/brenosfigueiredo/)
+Developer | [Breno S. Figueiredo](https://www.linkedin.com/in/brenosfigueiredo/)
