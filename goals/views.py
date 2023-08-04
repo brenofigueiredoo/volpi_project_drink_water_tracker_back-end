@@ -4,6 +4,7 @@ from .models import Goals
 from users.serializers import User
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework import serializers
 
 
 class GoalCreateView(generics.CreateAPIView):
@@ -13,6 +14,13 @@ class GoalCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         user_id = self.kwargs["user_id"]
         user = get_object_or_404(User, pk=user_id)
+
+        dateExists = Goals.objects.filter(
+            user_id=user_id, date=self.request.data["date"]
+        )
+
+        if dateExists:
+            raise serializers.ValidationError({"date": ["Date already exists"]})
 
         goal_of_the_day_ml = round(user.weight_kg * 35, 2)
 
