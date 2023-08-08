@@ -45,6 +45,15 @@ python manage.py runserver
 para acessar a aplicação utilize: [localhost:8000](localhost:8000)
 &nbsp;
 
+### Rodar os testes:
+1. Abra o terminal e entre do ambiente virtual.
+```
+.\venv\Scripts\activate
+```
+2. Rode os testes.
+```
+python manage.py test
+```
 ## Ferramentas utilizadas 🛠 
 
  <img align="center" alt="python" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"> <img align="center" alt="github" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg">
