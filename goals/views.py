@@ -7,9 +7,12 @@ from rest_framework.response import Response
 from rest_framework import serializers
 
 
-class GoalCreateView(generics.CreateAPIView):
+class GoalListCreateView(generics.ListCreateAPIView):
     serializer_class = GoalSerializer
-    queryset = Goals.objects.all()
+
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]
+        return Goals.objects.filter(user_id=user_id)
 
     def perform_create(self, serializer):
         user_id = self.kwargs["user_id"]
@@ -25,14 +28,6 @@ class GoalCreateView(generics.CreateAPIView):
         goal_of_the_day_ml = round(user.weight_kg * 35, 2)
 
         serializer.save(user=user, goal_of_the_day_ml=goal_of_the_day_ml)
-
-
-class GoalsUserListView(generics.ListAPIView):
-    serializer_class = GoalSerializer
-
-    def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        return Goals.objects.filter(user_id=user_id)
 
 
 class GoalDetailView(generics.RetrieveDestroyAPIView):

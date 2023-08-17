@@ -21,7 +21,7 @@ class UserListCreateViewTest(APITestCase):
         added_user = User.objects.last()
 
         response = self.client.post(
-            f"{self.BASE_URL}/user/create/{str(added_user.id)}", data={}, format="json"
+            f"{self.BASE_URL}/user/{str(added_user.id)}", data={}, format="json"
         )
 
         expected_data = {
@@ -30,14 +30,14 @@ class UserListCreateViewTest(APITestCase):
         resulted_data = response.json()
         msg = (
             "\nVerifique se as informações do Goal retornadas no POST "
-            + f"em `{self.BASE_URL}/user/create/<uuid:user_id>` com dados validos estão corretas."
+            + f"em `{self.BASE_URL}/user/<uuid:user_id>` com dados validos estão corretas."
         )
         self.assertDictEqual(expected_data, resulted_data, msg)
         self.assertEqual(response.status_code, 400)
 
     def test_goal_creation_without_user_id(self):
         response = self.client.post(
-            f"{self.BASE_URL}/user/create/{self.id_nonexistent}",
+            f"{self.BASE_URL}/user/{self.id_nonexistent}",
             data=self.goal_data,
             format="json",
         )
@@ -45,7 +45,7 @@ class UserListCreateViewTest(APITestCase):
         resulted_data = response.json()
         msg = (
             "\nVerifique se as informações do Goal retornadas no POST "
-            + f"em `{self.BASE_URL}/user/create/<uuid:user_id>` com dados validos estão corretas."
+            + f"em `{self.BASE_URL}/user/<uuid:user_id>` com dados validos estão corretas."
         )
         self.assertDictEqual(self.data_not_found, resulted_data, msg)
         self.assertEqual(response.status_code, 404)
@@ -55,7 +55,7 @@ class UserListCreateViewTest(APITestCase):
         added_user = User.objects.last()
 
         response = self.client.post(
-            f"{self.BASE_URL}/user/create/{str(added_user.id)}",
+            f"{self.BASE_URL}/user/{str(added_user.id)}",
             data=self.goal_data,
             format="json",
         )
@@ -74,7 +74,7 @@ class UserListCreateViewTest(APITestCase):
         resulted_data = response.json()
         msg = (
             "\nVerifique se as informações do Goal retornadas no POST "
-            + f"em `{self.BASE_URL}/user/create/<uuid:user_id>` com dados validos estão corretas."
+            + f"em `{self.BASE_URL}/user/<uuid:user_id>` com dados validos estão corretas."
         )
 
         self.assertDictEqual(expected_data, resulted_data, msg)
@@ -86,7 +86,7 @@ class UserListCreateViewTest(APITestCase):
         added_user = User.objects.last()
 
         self.client.post(
-            f"{self.BASE_URL}/user/create/{str(added_user.id)}",
+            f"{self.BASE_URL}/user/{str(added_user.id)}",
             data=self.goal_data,
             format="json",
         )
