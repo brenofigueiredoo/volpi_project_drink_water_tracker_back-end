@@ -18,11 +18,11 @@ class GoalListCreateView(generics.ListCreateAPIView):
         user_id = self.kwargs["user_id"]
         user = get_object_or_404(User, pk=user_id)
 
-        dateExists = Goals.objects.filter(
+        date_exists = Goals.objects.filter(
             user_id=user_id, date=self.request.data["date"]
         )
 
-        if dateExists:
+        if date_exists:
             raise serializers.ValidationError({"date": ["Date already exists"]})
 
         goal_of_the_day_ml = round(user.weight_kg * 35, 2)

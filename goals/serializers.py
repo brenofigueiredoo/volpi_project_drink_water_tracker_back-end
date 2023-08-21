@@ -4,6 +4,8 @@ from django.core.validators import MinValueValidator
 
 
 class GoalSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
     class Meta:
         model = Goals
         fields = [
@@ -20,6 +22,14 @@ class GoalSerializer(serializers.ModelSerializer):
             "remaining_goals_ml",
             "user",
         ]
+
+    def get_user(self, obj):
+        user = obj.user
+        return {
+            "id": user.id,
+            "name": user.name,
+            "weight_kg": user.weight_kg,
+        }
 
 
 class GoalUpdateSerializer(serializers.ModelSerializer):
