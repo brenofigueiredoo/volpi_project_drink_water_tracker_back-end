@@ -481,7 +481,6 @@ components:
           minimum: 0.0
         user:
           type: string
-          format: uuid
           readOnly: true
         date:
           type: string
