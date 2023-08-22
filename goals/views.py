@@ -12,6 +12,8 @@ class GoalListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs["user_id"]
+        get_object_or_404(User, pk=user_id)
+
         return Goals.objects.filter(user_id=user_id)
 
     def perform_create(self, serializer):
@@ -25,9 +27,7 @@ class GoalListCreateView(generics.ListCreateAPIView):
         if date_exists:
             raise serializers.ValidationError({"date": ["Date already exists"]})
 
-        goal_of_the_day_ml = round(user.weight_kg * 35, 2)
-
-        serializer.save(user=user, goal_of_the_day_ml=goal_of_the_day_ml)
+        serializer.save(user=user, goal_of_the_day_ml=user.goal_ml)
 
 
 class GoalDetailView(generics.RetrieveDestroyAPIView):
@@ -63,7 +63,7 @@ class GoalUpdateView(generics.UpdateAPIView):
         goal_id = self.kwargs["goal_id"]
         goal = get_object_or_404(Goals, pk=goal_id)
 
-        goal_of_the_day_ml = goal.goal_of_the_day_ml
+        goal_of_the_day_ml = goal.user.goal_ml
 
         goal_consumed_ml = goal.goal_consumed_ml + quantity_ml
 
