@@ -3,7 +3,6 @@
  
  
  # Drink water tracker 📊  
-**Controlando e organizando suas finanças**
 
 ***➡ Quer acessar a documentação das rotas: http://localhost:8000/api/docs/swagger-ui/***
 
