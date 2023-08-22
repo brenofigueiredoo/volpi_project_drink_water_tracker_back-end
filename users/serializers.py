@@ -25,7 +25,6 @@ class ListAllUsersSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "weight_kg",
             "goal_ml",
             "completed_goals",
         ]
