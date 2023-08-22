@@ -29,6 +29,7 @@ class GoalSerializer(serializers.ModelSerializer):
             "id": user.id,
             "name": user.name,
             "weight_kg": user.weight_kg,
+            "goal_ml": user.goal_ml,
         }
 
 

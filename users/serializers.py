@@ -9,4 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "weight_kg",
+            "goal_ml",
+        ]
+        read_only_fields = [
+            "goal_ml",
         ]
