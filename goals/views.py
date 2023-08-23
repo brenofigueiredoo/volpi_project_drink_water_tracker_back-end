@@ -5,9 +5,42 @@ from users.serializers import User
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import serializers
+from .utils import validate_date_format
 
 
-class GoalListCreateView(generics.ListCreateAPIView):
+class GoalRetrieveCreateByUserIdView(generics.ListCreateAPIView):
+    serializer_class = GoalSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]
+        get_object_or_404(User, pk=user_id)
+
+        date = self.kwargs["date"]
+        validate_date_format(date)
+
+        goals = Goals.objects.filter(user_id=user_id, date=date)
+
+        if len(goals) <= 0:
+            raise serializers.ValidationError({"detail": "Not found"})
+
+        return goals
+
+    def perform_create(self, serializer):
+        user_id = self.kwargs["user_id"]
+        user = get_object_or_404(User, pk=user_id)
+
+        date = self.kwargs["date"]
+        validate_date_format(date)
+
+        date_exists = Goals.objects.filter(user_id=user_id, date=date)
+
+        if date_exists:
+            raise serializers.ValidationError({"detail": ["Date already exists"]})
+
+        serializer.save(user=user, goal_of_the_day_ml=user.goal_ml, date=date)
+
+
+class GoalListByUserIdView(generics.ListAPIView):
     serializer_class = GoalSerializer
 
     def get_queryset(self):
@@ -16,27 +49,14 @@ class GoalListCreateView(generics.ListCreateAPIView):
 
         return Goals.objects.filter(user_id=user_id)
 
-    def perform_create(self, serializer):
-        user_id = self.kwargs["user_id"]
-        user = get_object_or_404(User, pk=user_id)
 
-        date_exists = Goals.objects.filter(
-            user_id=user_id, date=self.request.data["date"]
-        )
-
-        if date_exists:
-            raise serializers.ValidationError({"date": ["Date already exists"]})
-
-        serializer.save(user=user, goal_of_the_day_ml=user.goal_ml)
-
-
-class GoalDetailView(generics.RetrieveDestroyAPIView):
+class GoalRetrieveDestroyByIdView(generics.RetrieveDestroyAPIView):
     serializer_class = GoalSerializer
     queryset = Goals.objects.all()
     lookup_url_kwarg = "goal_id"
 
 
-class GoalUpdateView(generics.UpdateAPIView):
+class GoalUpdateByIdView(generics.UpdateAPIView):
     serializer_class = GoalUpdateSerializer
     queryset = Goals.objects.all()
     lookup_url_kwarg = "goal_id"

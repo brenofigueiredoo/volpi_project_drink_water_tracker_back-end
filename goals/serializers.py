@@ -21,6 +21,7 @@ class GoalSerializer(serializers.ModelSerializer):
             "goal_of_the_day_ml",
             "remaining_goals_ml",
             "user",
+            "date",
         ]
 
     def get_user(self, obj):
