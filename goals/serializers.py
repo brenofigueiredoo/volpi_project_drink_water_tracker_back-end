@@ -20,6 +20,8 @@ class GoalSerializer(serializers.ModelSerializer):
         read_only_fields = [
             "goal_of_the_day_ml",
             "remaining_goals_ml",
+            "goal_consumed_ml",
+            "goal_consumed_percentage",
             "user",
             "date",
         ]
