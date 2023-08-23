@@ -68,7 +68,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Goal'
-        required: true
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -112,65 +111,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GoalUpdate'
-          description: ''
-  /api/goals/user/{user_id}:
-    get:
-      operationId: api_goals_user_list
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Goal'
-          description: ''
-    post:
-      operationId: api_goals_user_create
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - api
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Goal'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Goal'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Goal'
-        required: true
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Goal'
           description: ''
   /api/schema/:
     get:
@@ -317,7 +257,117 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /api/user/{user_id}/goals:
+    get:
+      operationId: api_user_goals_list
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/user/{user_id}/goals/{date}:
+    get:
+      operationId: api_user_goals_list_2
+      parameters:
+      - in: path
+        name: date
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+          description: ''
+    post:
+      operationId: api_user_goals_create
+      parameters:
+      - in: path
+        name: date
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Goal'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
   /api/users:
+    get:
+      operationId: api_users_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListAllUsers'
+          description: ''
     post:
       operationId: api_users_create
       tags:
@@ -473,20 +523,22 @@ components:
         goal_consumed_ml:
           type: number
           format: double
-          minimum: 0.0
+          readOnly: true
         goal_consumed_percentage:
           type: number
           format: double
-          maximum: 100.0
-          minimum: 0.0
+          readOnly: true
         user:
           type: string
           readOnly: true
         date:
           type: string
           format: date
+          readOnly: true
       required:
       - date
+      - goal_consumed_ml
+      - goal_consumed_percentage
       - goal_of_the_day_ml
       - id
       - remaining_goals_ml
@@ -500,6 +552,26 @@ components:
           minimum: 0.0
       required:
       - quantity
+    ListAllUsers:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 127
+        goal_ml:
+          type: number
+          format: double
+        completed_goals:
+          type: string
+          readOnly: true
+      required:
+      - completed_goals
+      - id
+      - name
     PatchedGoalUpdate:
       type: object
       properties:
@@ -520,6 +592,10 @@ components:
         weight_kg:
           type: number
           format: double
+        goal_ml:
+          type: number
+          format: double
+          readOnly: true
     User:
       type: object
       properties:
@@ -533,7 +609,12 @@ components:
         weight_kg:
           type: number
           format: double
+        goal_ml:
+          type: number
+          format: double
+          readOnly: true
       required:
+      - goal_ml
       - id
       - name
       - weight_kg
