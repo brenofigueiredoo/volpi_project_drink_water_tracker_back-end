@@ -1,8 +1,9 @@
 openapi: 3.0.3
 info:
-  title: Titulo exemplo
+  title: Drink water tracker
   version: 0.0.0
-  description: descriçao exemplo
+  description: API Back End feita em Python e Django, para um app de 'lembrar de beber
+    água'
 paths:
   /api/goals/{goal_id}:
     get:

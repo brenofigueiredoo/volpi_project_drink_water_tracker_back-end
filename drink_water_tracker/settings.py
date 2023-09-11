@@ -131,8 +131,8 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Titulo exemplo",
-    "DESCRIPTION": "descriçao exemplo",
+    "TITLE": "Drink water tracker",
+    "DESCRIPTION": "API Back End feita em Python e Django, para um app de 'lembrar de beber água'",
 }
 
 # Internationalization
