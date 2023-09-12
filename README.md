@@ -4,7 +4,7 @@
  
  # Drink water tracker 📊  
 
-***➡ Quer acessar a documentação da API: http://localhost:8000/api/docs/swagger-ui/***
+***➡ Quer acessar a documentação da API: https://api-drink-water-tracker.onrender.com/api/docs/swagger-ui/***
 
 ***➡ Para acessar o Front End dessa aplicação: [Clique aqui](https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_front-end)***
 
