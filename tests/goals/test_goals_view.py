@@ -56,7 +56,7 @@ class UserListCreateViewTest(APITestCase):
         expected_data = {
             "id": str(added_goal.id),
             "goal_of_the_day_ml": 2947.0,
-            "remaining_goals_ml": 0.0,
+            "remaining_goals_ml": 2947.0,
             "goal_consumed_ml": 0.0,
             "goal_consumed_percentage": 0.0,
             "user": {
@@ -119,7 +119,7 @@ class UserListCreateViewTest(APITestCase):
         expected_data = {
             "id": str(added_goal.id),
             "goal_of_the_day_ml": 2947.0,
-            "remaining_goals_ml": 0.0,
+            "remaining_goals_ml": 2947.0,
             "goal_consumed_ml": 0.0,
             "goal_consumed_percentage": 0.0,
             "user": {
@@ -156,7 +156,7 @@ class UserListCreateViewTest(APITestCase):
             {
                 "id": str(added_goal.id),
                 "goal_of_the_day_ml": 2947.0,
-                "remaining_goals_ml": 0.0,
+                "remaining_goals_ml": 2947.0,
                 "goal_consumed_ml": 0.0,
                 "goal_consumed_percentage": 0.0,
                 "user": {
