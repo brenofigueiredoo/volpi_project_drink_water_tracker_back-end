@@ -11,7 +11,7 @@
 <br />
 
 * ***Apresentação da Arquitetura do Projeto*** => [Clique aqui](https://share.vidyard.com/watch/NKDF1aRVbmsjAeMvh8Lcd5?) e confira a proposta do projeto.
-* ***Apresentação do uso da API em FrontEnd*** => [Clique aqui](https://share.vidyard.com/watch/AMU2Fv6xGATGjqtPcuLwms?) e confira a proposta do projeto.
+* ***Apresentação do uso da API com o Front End*** => [Clique aqui](https://share.vidyard.com/watch/AMU2Fv6xGATGjqtPcuLwms?) e confira a proposta do projeto.
 
 * ***Diagrama ER*** => [Clique aqui](https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_back-end/blob/main/diagrama.png) e acesse o diagrama do Projeto.
 
