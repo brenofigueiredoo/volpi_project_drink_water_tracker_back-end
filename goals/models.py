@@ -19,8 +19,3 @@ class Goals(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="goals"
     )
-
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Verifica se é uma nova instância (ou seja, está sendo criada)
-            self.remaining_goals_ml = self.user.goal_ml - self.goal_consumed_ml
-        super(Goals, self).save(*args, **kwargs)

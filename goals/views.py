@@ -37,7 +37,12 @@ class GoalRetrieveCreateByUserIdView(generics.ListCreateAPIView):
         if date_exists:
             raise serializers.ValidationError({"detail": ["Date already exists"]})
 
-        serializer.save(user=user, goal_of_the_day_ml=user.goal_ml, date=date)
+        serializer.save(
+            user=user,
+            goal_of_the_day_ml=user.goal_ml,
+            remaining_goals_ml=user.goal_ml,
+            date=date,
+        )
 
 
 class GoalListByUserIdView(generics.ListAPIView):
