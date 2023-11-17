@@ -6,19 +6,27 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import serializers
 from .utils import validate_date_format
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .permissions import IsOwnerOfGoal, IsUserLogged
+from drf_spectacular.utils import extend_schema
 
 
+@extend_schema(
+    description="{date} = yyyy-MM-dd",
+    tags=["Goals"],
+)
 class GoalRetrieveCreateByUserIdView(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsUserLogged]
+
     serializer_class = GoalSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        get_object_or_404(User, pk=user_id)
-
+        user = self.request.user
         date = self.kwargs["date"]
         validate_date_format(date)
 
-        goals = Goals.objects.filter(user_id=user_id, date=date)
+        goals = Goals.objects.filter(user=user, date=date)
 
         if len(goals) <= 0:
             raise serializers.ValidationError({"detail": "Not found"})
@@ -26,13 +34,11 @@ class GoalRetrieveCreateByUserIdView(generics.ListCreateAPIView):
         return goals
 
     def perform_create(self, serializer):
-        user_id = self.kwargs["user_id"]
-        user = get_object_or_404(User, pk=user_id)
-
+        user = self.request.user
         date = self.kwargs["date"]
         validate_date_format(date)
 
-        date_exists = Goals.objects.filter(user_id=user_id, date=date)
+        date_exists = Goals.objects.filter(user=user, date=date)
 
         if date_exists:
             raise serializers.ValidationError({"detail": ["Date already exists"]})
@@ -45,23 +51,32 @@ class GoalRetrieveCreateByUserIdView(generics.ListCreateAPIView):
         )
 
 
+@extend_schema(tags=["Goals"])
 class GoalListByUserIdView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsUserLogged]
     serializer_class = GoalSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        get_object_or_404(User, pk=user_id)
-
-        return Goals.objects.filter(user_id=user_id)
+        user = self.request.user
+        return Goals.objects.filter(user=user)
 
 
+@extend_schema(tags=["Goals"])
 class GoalRetrieveDestroyByIdView(generics.RetrieveDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsOwnerOfGoal]
+
     serializer_class = GoalSerializer
     queryset = Goals.objects.all()
     lookup_url_kwarg = "goal_id"
 
 
+@extend_schema(tags=["Goals"])
 class GoalUpdateByIdView(generics.UpdateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsOwnerOfGoal]
+
     serializer_class = GoalUpdateSerializer
     queryset = Goals.objects.all()
     lookup_url_kwarg = "goal_id"

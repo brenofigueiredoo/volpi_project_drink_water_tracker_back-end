@@ -8,13 +8,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "id",
-            "name",
+            "username",
             "weight_kg",
             "goal_ml",
+            "email",
+            "password",
         ]
         read_only_fields = [
             "goal_ml",
         ]
+        extra_kwargs = {
+            "password": {"write_only": True},
+        }
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
 
 
 class ListAllUsersSerializer(serializers.ModelSerializer):
@@ -24,7 +32,8 @@ class ListAllUsersSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "id",
-            "name",
+            "username",
+            "email",
             "goal_ml",
             "completed_goals",
         ]

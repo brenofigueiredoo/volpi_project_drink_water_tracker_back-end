@@ -30,9 +30,10 @@ class GoalSerializer(serializers.ModelSerializer):
         user = obj.user
         return {
             "id": user.id,
-            "name": user.name,
+            "username": user.username,
             "weight_kg": user.weight_kg,
             "goal_ml": user.goal_ml,
+            "email": user.email,
         }
 
 
