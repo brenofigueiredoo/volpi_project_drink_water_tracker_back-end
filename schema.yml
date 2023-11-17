@@ -1,10 +1,26 @@
 openapi: 3.0.3
 info:
   title: Drink water tracker
-  version: 0.0.0
+  version: 2.0.0
   description: API Back End feita em Python e Django, para um app de 'lembrar de beber
     água'
 paths:
+  /api/goals:
+    get:
+      operationId: api_goals_list
+      tags:
+      - Goals
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+          description: ''
   /api/goals/{goal_id}:
     get:
       operationId: api_goals_retrieve
@@ -16,11 +32,9 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Goals
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -38,11 +52,9 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Goals
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '204':
           description: No response body
@@ -57,7 +69,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Goals
       requestBody:
         content:
           application/json:
@@ -70,9 +82,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Goal'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -90,7 +100,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Goals
       requestBody:
         content:
           application/json:
@@ -103,15 +113,94 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedGoalUpdate'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GoalUpdate'
+          description: ''
+  /api/goals/date/{date}:
+    get:
+      operationId: api_goals_date_list
+      description: '{date} = yyyy-MM-dd'
+      parameters:
+      - in: path
+        name: date
+        schema:
+          type: string
+        required: true
+      tags:
+      - Goals
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+          description: ''
+    post:
+      operationId: api_goals_date_create
+      description: '{date} = yyyy-MM-dd'
+      parameters:
+      - in: path
+        name: date
+        schema:
+          type: string
+        required: true
+      tags:
+      - Goals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Goal'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /api/login:
+    post:
+      operationId: api_login_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
           description: ''
   /api/schema/:
     get:
@@ -235,8 +324,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -258,107 +346,13 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
-  /api/user/{user_id}/goals:
-    get:
-      operationId: api_user_goals_list
-      parameters:
-      - in: path
-        name: user_id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Goal'
-          description: ''
-  /api/user/{user_id}/goals/{date}:
-    get:
-      operationId: api_user_goals_list_2
-      parameters:
-      - in: path
-        name: date
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: user_id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Goal'
-          description: ''
-    post:
-      operationId: api_user_goals_create
-      parameters:
-      - in: path
-        name: date
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: user_id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - api
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Goal'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Goal'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Goal'
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Goal'
-          description: ''
   /api/users:
     get:
       operationId: api_users_list
       tags:
-      - api
+      - Users
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -372,7 +366,7 @@ paths:
     post:
       operationId: api_users_create
       tags:
-      - api
+      - Users
       requestBody:
         content:
           application/json:
@@ -386,8 +380,7 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '201':
@@ -407,11 +400,9 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -429,7 +420,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       requestBody:
         content:
           application/json:
@@ -443,9 +434,7 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -463,7 +452,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       requestBody:
         content:
           application/json:
@@ -476,9 +465,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUser'
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '200':
           content:
@@ -496,11 +483,9 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+      - jwtAuth: []
       responses:
         '204':
           description: No response body
@@ -560,8 +545,12 @@ components:
           type: string
           format: uuid
           readOnly: true
-        name:
+        username:
           type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
           maxLength: 127
         goal_ml:
           type: number
@@ -571,8 +560,9 @@ components:
           readOnly: true
       required:
       - completed_goals
+      - email
       - id
-      - name
+      - username
     PatchedGoalUpdate:
       type: object
       properties:
@@ -587,9 +577,9 @@ components:
           type: string
           format: uuid
           readOnly: true
-        name:
+        username:
           type: string
-          maxLength: 127
+          maxLength: 150
         weight_kg:
           type: number
           format: double
@@ -597,6 +587,34 @@ components:
           type: number
           format: double
           readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 127
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
     User:
       type: object
       properties:
@@ -604,9 +622,9 @@ components:
           type: string
           format: uuid
           readOnly: true
-        name:
+        username:
           type: string
-          maxLength: 127
+          maxLength: 150
         weight_kg:
           type: number
           format: double
@@ -614,16 +632,23 @@ components:
           type: number
           format: double
           readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 127
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
       required:
+      - email
       - goal_ml
       - id
-      - name
+      - password
+      - username
       - weight_kg
   securitySchemes:
-    basicAuth:
+    jwtAuth:
       type: http
-      scheme: basic
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: sessionid
+      scheme: bearer
+      bearerFormat: JWT

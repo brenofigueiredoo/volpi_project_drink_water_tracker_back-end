@@ -3,11 +3,11 @@ from . import views
 
 urlpatterns = [
     path(
-        "user/<uuid:user_id>/goals/<str:date>",
+        "goals/date/<str:date>",
         views.GoalRetrieveCreateByUserIdView.as_view(),
     ),
     path(
-        "user/<uuid:user_id>/goals",
+        "goals",
         views.GoalListByUserIdView.as_view(),
     ),
     path(

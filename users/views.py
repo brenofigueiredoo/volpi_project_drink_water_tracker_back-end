@@ -2,8 +2,12 @@ from rest_framework import generics
 from rest_framework.response import Response
 from .serializers import UserSerializer, ListAllUsersSerializer
 from .models import User
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .permissions import IsAccountOwner
+from drf_spectacular.utils import extend_schema
 
 
+@extend_schema(tags=["Users"])
 class UserView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -34,7 +38,11 @@ class UserView(generics.ListCreateAPIView):
         return Response(serialized_data)
 
 
+@extend_schema(tags=["Users"])
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAccountOwner]
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_url_kwarg = "user_id"
