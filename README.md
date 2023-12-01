@@ -1,8 +1,4 @@
-> Repositório de projeto Back-End desenvolvido em Python para vaga de Software Engineer na Volpi.
- <br />
- 
- 
- # Drink water tracker 💧 
+# Drink water tracker 💧 
 
  API Backend para um app "Lembrar de Beber Água" 📱, que possibilita aos usuários registrar o consumo diário, monitorar metas com base no peso, e realizar operações de login e atualização de dados.
 
