@@ -4,6 +4,8 @@
  
  # Drink water tracker 📊  
 
+ #### API Backend para um app "Lembrar de Beber Água" 📱💧 que possibilita aos usuários registrar o consumo diário, monitorar metas com base no peso, e realizar operações de login e atualização de dados.
+
 ***➡ Para acessar a documentação da API: [Clique aqui](https://api-drink-water-tracker.onrender.com/api/docs/swagger-ui/)***
 
 ***➡ Para acessar o Front End dessa aplicação: [Clique aqui](https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_front-end)***
