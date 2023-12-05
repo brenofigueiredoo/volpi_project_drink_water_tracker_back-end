@@ -16,7 +16,7 @@
 <br />
 &nbsp;
 
-## Rodando localmente:
+## Rodando localmente :
 1. Faça o clone da do repósitorio e acesse a pasta clonada.
 ```shell
 git clone https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_back-end.git
@@ -58,14 +58,106 @@ python manage.py test
 - Insomnia <img align="center" alt="insomnia" height="30" width="40" src="https://www.svgrepo.com/show/353904/insomnia.svg">
 - GitHub <img align="center" alt="github" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg">
 - VsCode <img align="center" alt="vscode" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"> 
- 
-
 
 &nbsp;
-
 
 ## Contribuintes ✨
 
 Função   | Membro
 --------- | ------
 Developer | [Breno S. Figueiredo](https://www.linkedin.com/in/brenosfigueiredo/)
+
+&nbsp;
+
+## Documentação 📚
+
+### 1 - Users
+#### 1.1 - Criar Usuário
+- Endpoint: `POST /users`
+  
+Cria um novo usuário. Deve enviar um JSON no corpo da requisição com os seguintes campos:
+```
+{
+  "username": "string",
+  "weight_kg": 0,
+  "email": "user@example.com",
+  "password": "string"
+}
+```
+
+#### 1.2 - Login do Usuário
+- Endpoint: `POST /login`
+  
+Gera um token de acesso ao usuário. Deve enviar um JSON no corpo da requisição com os seguintes campos:
+```
+{
+  "email": "user@example.com",
+  "password": "string"
+}
+```
+
+#### 1.3 - Listar Usuário
+- Endpoint: `GET /users/detail`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Retorna os dados do usuário logado.
+
+#### 1.4 - Atualizar Usuário
+- Endpoint: `PATCH /users/detail`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Atualiza os dados do usuário logado. Deve enviar um JSON no corpo da requisição com os seguintes campos:
+```
+{
+  "username": "string",
+  "weight_kg": 0,
+}
+```
+
+#### 1.5 - Deletar Usuário
+- Endpoint: `DELETE /users/detail`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Deleta usuário logado do banco de dados.
+
+### 2 - Goals
+#### 2.1 - Criar Meta
+- Endpoint: `POST /goals/date/{yyyy-MM-dd}`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Cria uma nova meta ao usuário logado.
+
+#### 2.2 - Buscar Meta por Data
+- Endpoint: `GET /goals/date/{yyyy-MM-dd}`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Retorna a meta do usuário logado de acordo com a data passada por parâmetro.
+
+#### 2.3 - Buscar Meta por ID
+- Endpoint: `GET /goals/date/{goal_id}`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Retorna a meta do usuário logado de acordo com o ID passado por parâmetro.
+
+#### 2.4 - Listar Meta
+- Endpoint: `GET /goals`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Lista todas as metas do usuário logado.
+
+#### 2.5 - Atualizar Meta
+- Endpoint: `PATCH /goals/{goal_id}/drinkwater`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Atualiza os dados da meta passada por parâmetro. Deve enviar um JSON no corpo da requisição com os seguintes campos:
+```
+{
+  "quantity": 0
+}
+```
+
+#### 2.6 - Deletar Meta
+- Endpoint: `DELETE /goals/{goal_id}`
+- O token de acesso deve ser incluído no cabeçalho da requisição
+  
+Deleta a meta passada por parâmetro do banco de dados.
