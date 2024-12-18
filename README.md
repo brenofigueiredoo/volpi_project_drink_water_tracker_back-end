@@ -28,7 +28,7 @@ git clone https://github.com/brenofigueiredoo/volpi_project_drink_water_tracker_
 cd volpi_project_drink_water_tracker_back-end
 
 # Subir os conteiners
-docker-compose up --build -d
+docker-compose up --build
 ```
 
 Caso não tenha Docker, pode roda o projeto assim:
